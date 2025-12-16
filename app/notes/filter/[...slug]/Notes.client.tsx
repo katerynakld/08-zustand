@@ -11,6 +11,7 @@ import { useDebounce } from "use-debounce";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { NoteTag } from "@/types/note";
+import Link from "next/link";
 
 interface NotesProps {
   tag?: NoteTag;
@@ -19,12 +20,7 @@ interface NotesProps {
 function NotesClient({ tag }: NotesProps) {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedQuery] = useDebounce(query, 500);
-
-  const openModal = () => setIsModalOpen(true);
-
-  const closeModal = () => setIsModalOpen(false);
 
   const handleSearch = (text: string) => {
     setQuery(text);
@@ -47,17 +43,11 @@ function NotesClient({ tag }: NotesProps) {
         {totalPages > 1 && (
           <Pagination totalPages={totalPages} page={page} setPage={setPage} />
         )}
-        <button onClick={openModal} className={css.button}>
+        <Link className={css.button} href="/notes/action/create">
           Create note +
-        </button>
+        </Link>
       </header>
       {isSuccess && <NoteList notes={data.notes} />}
-
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
-        </Modal>
-      )}
     </div>
   );
 }

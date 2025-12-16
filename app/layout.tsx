@@ -7,18 +7,34 @@ import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 const pressStart = Press_Start_2P({
   subsets: ["latin"],
+  display: "swap",
   weight: "400",
   variable: "--font-press-start",
 });
 
 const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  display: "swap",
   weight: "400",
   variable: "--font-space-mono",
 });
 
 export const metadata: Metadata = {
   title: "NoteHub App",
-  description: "Developed by Kateryna Koliada",
+  description:
+    "NoteHub is a fun, retro-style note app that feels like a game. Create notes, explore categories, and enjoy a colorful, summery experience while staying organized.",
+  openGraph: {
+    title: "Notehub",
+    description:
+      "NoteHub is a fun, retro-style note app that feels like a game. Create notes, explore categories, and enjoy a colorful, summery experience while staying organized.",
+    url: `08-zustand-five-beryl.vercel.app/`,
+    images: [
+      {
+        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        alt: "Notehub App",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -6,10 +6,31 @@ import {
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
 import { NoteTag } from "@/types/note";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const category = slug[0] === "all" ? undefined : (slug[0] as NoteTag);
+  return {
+    title: category ? `Notes: ${category}` : "All Notes",
+    description: `Your notes filtered by ${category} category.`,
+    openGraph: {
+      title: category ? `Notes: ${category}` : "All Notes",
+      description: `Your notes filtered by ${category} category.`,
+      url: `08-zustand-five-beryl.vercel.app/notes/filter/${category}`,
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          alt: "Notehub Notes",
+        },
+      ],
+    },
+  };
+}
 
 const NotesByCategory = async ({ params }: Props) => {
   const { slug } = await params;
