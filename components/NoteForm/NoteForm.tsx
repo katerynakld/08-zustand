@@ -35,6 +35,9 @@ function NoteForm() {
   const mutation = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["notes"],
+      });
       clearDraft();
       toast.success("Note added successfully");
       router.push("/notes/filter/all");
@@ -101,7 +104,11 @@ function NoteForm() {
       </div>
 
       <div className={css.actions}>
-        <button onClick={handleCancel} className={css.cancelButton}>
+        <button
+          onClick={handleCancel}
+          type="button"
+          className={css.cancelButton}
+        >
           Cancel
         </button>
         <button type="submit" className={css.submitButton} disabled={false}>
